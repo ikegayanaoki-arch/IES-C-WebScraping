@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ws09 の解説</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf9;
+      --ink: #22201d;
+      --sub: #5d574f;
+      --line: #d6c8b2;
+      --accent: #8b5e34;
+      --accent-soft: #efe3d2;
+      --code: #2b241d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #f8ead1 0, transparent 30%),
+        linear-gradient(180deg, #f6f2eb 0%, #efe6da 100%);
+      line-height: 1.7;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    nav {
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.82);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+    nav h1 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+    }
+    nav p {
+      margin: 0 0 14px;
+      color: var(--sub);
+      font-size: 0.92rem;
+    }
+    nav a {
+      display: block;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      background: transparent;
+    }
+    nav a.current {
+      background: var(--accent-soft);
+      color: #5a391c;
+      font-weight: 700;
+    }
+    nav a:hover {
+      background: #f1e7d9;
+    }
+    main {
+      padding: 32px;
+    }
+    .hero {
+      background: rgba(255, 253, 249, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(82, 59, 29, 0.08);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      line-height: 1.2;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .card, .file-block {
+      background: rgba(255, 253, 249, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 22px;
+      box-shadow: 0 12px 30px rgba(82, 59, 29, 0.06);
+    }
+    .card h3, .file-block h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+    .file-block h4 {
+      margin: 18px 0 10px;
+      font-size: 1rem;
+      color: #6b4322;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .note {
+      color: var(--sub);
+      margin-bottom: 14px;
+    }
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 16px;
+      background: var(--code);
+      color: #f7f2ea;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    .explain {
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    a.inline {
+      color: var(--accent);
+    }
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      main {
+        padding: 20px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav>
+      <h1>src 解説ページ</h1>
+      <p><a class="inline" href="index.html">目次へ戻る</a></p>
+      <a class="" href="doc_src_ws01.html">ws01</a>
+<a class="" href="doc_src_ws02.html">ws02</a>
+<a class="" href="doc_src_ws03.html">ws03</a>
+<a class="" href="doc_src_ws04.html">ws04</a>
+<a class="" href="doc_src_ws05.html">ws05</a>
+<a class="" href="doc_src_ws07.html">ws07</a>
+<a class="" href="doc_src_ws08.html">ws08</a>
+<a class="current" href="doc_src_ws09.html">ws09</a>
+<a class="" href="doc_src_ws10.html">ws10</a>
+    </nav>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Directory Guide</p>
+        <h2>ws09</h2>
+        <p>pickle で保存した教員データを再読み込みし、棒グラフとワードクラウドで可視化する演習です。</p>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <h3>読みどころ</h3>
+          <ul><li>保存済みの `opList.dump` を辞書 `profData` に再構成し、分析しやすい形へ変換しています。</li>
+<li>職位頻度、所属頻度、研究テーマ・キーワードのワードクラウドをそれぞれ別画像で出力します。</li>
+<li>`ws09_1.py` と `ws09_2.py` は棒グラフ部分とワードクラウド部分を分けた練習版です。</li></ul>
+        </section>
+        <section class="card">
+          <h3>ソースコード一覧</h3>
+          <ul><li><a href="src/ws09/ws09.py" download>ws09.py</a></li>
+<li><a href="src/ws09/ws09_1.py" download>ws09_1.py</a></li>
+<li><a href="src/ws09/ws09_2.py" download>ws09_2.py</a></li></ul>
+        </section>
+      </div>
+      
+      
+    <section class="file-block">
+      <h3>src/ws09/ws09.py</h3>
+      <p class="note">pickle読込、辞書再構成、棒グラフ、ワードクラウド生成を一括で行う本体です。</p>
+      <pre><code>##python3.9 #09 data load by pickle
+import pickle ##for data save by pickle (binary)
+import matplotlib.pyplot as plt
+import japanize_matplotlib
+from wordcloud import WordCloud
+import numpy as np
+from PIL import Image
+
+## try &amp; error - main program
+try:
+  ## access &quot;url&quot; and get all html tags 
+  #url=&quot;https://q-pit.kyushu-u.ac.jp/cluster-social/&quot;
+  #r = requests.get(url)
+  #soup = BeautifulSoup(r.content, &quot;html.parser&quot;)
+  
+  ##to restore data 
+  opList=[]
+
+  ##read pickled ata
+  f=open(&quot;opList.dump&quot;, &quot;rb&quot;)
+  opList=pickle.load(f)
+  ##for debugging
+  print(opList)
+  
+  ##dictionary type
+  profData={&#x27;name&#x27;:[], &#x27;job title&#x27;:[], &#x27;affiliation&#x27;:[], &#x27;theme&#x27;:[], &#x27;keywords&#x27;:[]}
+  for op in opList: 
+    profData[&#x27;name&#x27;].append(op[0])
+    profData[&#x27;job title&#x27;].append(op[1])
+    profData[&#x27;affiliation&#x27;].append(op[2])
+    profData[&#x27;theme&#x27;].append(op[3])
+    profData[&#x27;keywords&#x27;].append(op[4])
+    ## Ref: -- data order in opList
+    #tmp=[]
+    #tmp.append(name)   
+    #tmp.append(jtl)   
+    #tmp.append(afl)   
+    #tmp.append(theme)   
+    #tmp.append(key)   
+    #opList.append(tmp)
+  ##list key
+  print(profData.keys()) 
+
+  ##extract values in dictionary
+  print(profData[&#x27;name&#x27;])
+  print(profData[&#x27;job title&#x27;])
+
+  ##loop by keys
+  for key in profData.keys():
+    print(key, profData[key])
+    
+  ##data analysis
+  ##post-pro#1 frequency of job title
+  fig=plt.figure()
+  jbtList=profData[&#x27;job title&#x27;]
+  catList=list(set(jbtList))
+  data={}
+  for cat in catList:
+    data[cat]=jbtList.count(cat) 
+  ##graph
+  val=list(data.values())
+  plt.bar(catList, val)
+  plt.grid()
+  plt.savefig(&quot;jtFreq.png&quot;)
+
+  ## post-pro#2 frequency of affiliation 
+  fig=plt.figure()
+  tmpList=profData[&#x27;affiliation&#x27;]
+  #aflList=[]
+  aflList=[strn.split()[0] for strn in tmpList]
+  catList=list(set(aflList))
+  data={}
+  for cat in catList:
+    data[cat]=aflList.count(cat) 
+  ##graph
+  val=list(data.values())
+  plt.bar(catList, val)
+  plt.grid()
+  plt.xticks(rotation=90)
+  plt.savefig(&quot;aflFreq.png&quot;, bbox_inches=&#x27;tight&#x27;)
+
+  ##Word could map
+  words1=list(filter(None, profData[&#x27;keywords&#x27;]))
+  words2=list(filter(None, profData[&#x27;theme&#x27;]))
+  txt1=&#x27;&#x27;.join(words1)
+  txt2=&#x27;&#x27;.join(words2)
+  txt=txt1 + txt2
+  ##for Japanese characters
+  fp=&quot;/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc&quot;
+  
+  ##change shape for cloud
+  #mask=np.array(Image.open(&quot;mask.png&quot;))
+  #mask=np.array(Image.open(&quot;mask2.png&quot;))
+  mask=np.array(Image.open(&quot;brain.png&quot;))
+  mask=255-mask ##nega-posi
+
+  cmap=&quot;Paired&quot;
+  wc=WordCloud(
+     stopwords=[&#x27;の&#x27;, &#x27;/&#x27;,&#x27; &#x27;,&#x27;(&#x27;, &#x27;)&#x27;, &#x27;・&#x27;, &#x27;、&#x27;, &#x27;, &#x27;, &#x27;and&#x27;, &#x27;for&#x27;, &#x27;in&#x27;, &#x27;of &#x27;], 
+     font_path=fp,
+     background_color=&quot;white&quot;,
+     colormap=cmap,
+     width=800,
+     height=800,
+     mask=mask
+     ).generate(txt)
+
+  plt.figure(figsize=(10, 10))
+  plt.imshow(wc, interpolation=&quot;bilinear&quot;)
+  plt.axis(&quot;off&quot;)
+  plt.savefig(&quot;wc.png&quot;)
+
+  ##show graphs
+  plt.show() 
+ 
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>保存済みの教員データを読み戻し、棒グラフとワードクラウドを生成する可視化プログラムです。</li><li>データ収集と分析処理が分離されている点が、この演習全体の重要な構成です。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`profData={&#x27;name&#x27;:[], ...}` のような辞書で項目別リストを管理しています。</li><li>`list(set(jbtList))` は重複を除いたカテゴリ一覧を作る表現です。</li><li>`plt.bar(...)`, `plt.grid()`, `plt.savefig(...)` は matplotlib の基本的な描画手順です。</li><li>`WordCloud(...).generate(txt)` で文字列からワードクラウド画像を生成しています。</li><li>`mask=255-mask` は画像の白黒を反転させて、雲の形状マスクとして使いやすくする処理です。</li></ul>
+      </div>
+    </section>
+    
+
+    <section class="file-block">
+      <h3>src/ws09/ws09_1.py</h3>
+      <p class="note">職位頻度と所属頻度の棒グラフ生成に絞った版です。</p>
+      <pre><code>##python3.9 #09 data load by pickle
+import requests
+from bs4 import BeautifulSoup   
+import time   ##for time control
+import pickle ##for data save by pickle (binary)
+import matplotlib.pyplot as plt
+import japanize_matplotlib
+from wordcloud import WordCloud
+import numpy as np
+from PIL import Image
+
+## try &amp; error - main program
+try:
+  ##to restore data 
+  opList=[]
+
+  ##read pickled ata
+  f=open(&quot;opList.dump&quot;, &quot;rb&quot;)
+  opList=pickle.load(f)
+  ##for debugging
+  print(opList)
+  
+  ##dictionary type
+  profData={&#x27;name&#x27;:[], &#x27;job title&#x27;:[], &#x27;affiliation&#x27;:[], &#x27;theme&#x27;:[], &#x27;keywords&#x27;:[]}
+  for op in opList: 
+    profData[&#x27;name&#x27;].append(op[0])
+    profData[&#x27;job title&#x27;].append(op[1])
+    profData[&#x27;affiliation&#x27;].append(op[2])
+    profData[&#x27;theme&#x27;].append(op[3])
+    profData[&#x27;keywords&#x27;].append(op[4])
+  ##list key
+  print(profData.keys()) 
+
+  ##extract values in dictionary
+  print(profData[&#x27;name&#x27;])
+  print(profData[&#x27;job title&#x27;])
+
+  ##loop by keys
+  for key in profData.keys():
+    print(key, profData[key])
+    
+  ##data analysis
+  ##post-pro#1 frequency of job title
+  fig=plt.figure()
+  jbtList=profData[&#x27;job title&#x27;]
+  catList=list(set(jbtList))
+  data={}
+  for cat in catList:
+    data[cat]=jbtList.count(cat) 
+  ##graph
+  val=list(data.values())
+  plt.bar(catList, val)
+  plt.grid()
+  plt.savefig(&quot;jtFreq.png&quot;)
+
+  ## post-pro#2 frequency of affiliation 
+  fig=plt.figure()
+  tmpList=profData[&#x27;affiliation&#x27;]
+  #aflList=[]
+  aflList=[strn.split()[0] for strn in tmpList]
+  catList=list(set(aflList))
+  data={}
+  for cat in catList:
+    data[cat]=aflList.count(cat) 
+  ##graph
+  val=list(data.values())
+  plt.bar(catList, val)
+  plt.grid()
+  plt.xticks(rotation=90)
+  plt.savefig(&quot;aflFreq.png&quot;, bbox_inches=&#x27;tight&#x27;)
+
+  ##show graphs
+  plt.show() 
+ 
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>棒グラフによる頻度集計だけを抜き出した版です。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>辞書 `data` にカテゴリごとの件数を入れ、`values()` を棒グラフの高さに使っています。</li></ul>
+      </div>
+    </section>
+    
+
+    <section class="file-block">
+      <h3>src/ws09/ws09_2.py</h3>
+      <p class="note">研究テーマ・キーワードからワードクラウドを作る部分に絞った版です。</p>
+      <pre><code>##python3.9 #09 data load by pickle
+import requests
+from bs4 import BeautifulSoup   
+import pickle ##for data save by pickle (binary)
+import matplotlib.pyplot as plt
+import japanize_matplotlib
+from wordcloud import WordCloud
+import numpy as np
+from PIL import Image
+## try &amp; error - main program
+try:
+  ##to restore data 
+  opList=[]
+
+  ##read pickled ata
+  f=open(&quot;opList.dump&quot;, &quot;rb&quot;)
+  opList=pickle.load(f)
+  ##for debugging
+  print(opList)
+  
+  ##dictionary type
+  profData={&#x27;name&#x27;:[], &#x27;job title&#x27;:[], &#x27;affiliation&#x27;:[], &#x27;theme&#x27;:[], &#x27;keywords&#x27;:[]}
+  for op in opList: 
+    profData[&#x27;name&#x27;].append(op[0])
+    profData[&#x27;job title&#x27;].append(op[1])
+    profData[&#x27;affiliation&#x27;].append(op[2])
+    profData[&#x27;theme&#x27;].append(op[3])
+    profData[&#x27;keywords&#x27;].append(op[4])
+  ##list key
+  print(profData.keys()) 
+
+  ##extract values in dictionary
+  print(profData[&#x27;name&#x27;])
+  print(profData[&#x27;job title&#x27;])
+
+  ##loop by keys
+  for key in profData.keys():
+    print(key, profData[key])
+    
+  ##Word could map
+  words1=list(filter(None, profData[&#x27;keywords&#x27;]))
+  words2=list(filter(None, profData[&#x27;theme&#x27;]))
+  txt1=&#x27;&#x27;.join(words1)
+  txt2=&#x27;&#x27;.join(words2)
+  txt=txt1 + txt2
+  ##for Japanese characters
+  fp=&quot;/System/Library/Fonts/ヒラギノ角ゴシック W4.ttc&quot;
+  
+  ##change shape for cloud
+  mask=np.array(Image.open(&quot;brain.png&quot;))
+  mask=255-mask ##nega-posi
+
+  cmap=&quot;Paired&quot;
+  wc=WordCloud(
+     stopwords=[&#x27;の&#x27;, &#x27;/&#x27;,&#x27; &#x27;,&#x27;(&#x27;, &#x27;)&#x27;, &#x27;・&#x27;, &#x27;、&#x27;, &#x27;, &#x27;, &#x27;and&#x27;, &#x27;for&#x27;, &#x27;in&#x27;, &#x27;of &#x27;], 
+     font_path=fp,
+     background_color=&quot;white&quot;,
+     colormap=cmap,
+     width=800,
+     height=800,
+     mask=mask
+     ).generate(txt)
+
+  plt.figure(figsize=(10, 10))
+  plt.imshow(wc, interpolation=&quot;bilinear&quot;)
+  plt.axis(&quot;off&quot;)
+  plt.savefig(&quot;wc.png&quot;)
+
+  ##show graphs
+  plt.show() 
+ 
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>ワードクラウド生成部分だけを抜き出した版です。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`filter(None, profData[&#x27;keywords&#x27;])` は空要素を取り除く書き方です。</li><li>フォントパスを明示しているのは、日本語文字を正しく描画するためです。</li></ul>
+      </div>
+    </section>
+    
+    </main>
+  </div>
+</body>
+</html>

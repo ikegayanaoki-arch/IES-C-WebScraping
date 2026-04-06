@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ws04 の解説</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf9;
+      --ink: #22201d;
+      --sub: #5d574f;
+      --line: #d6c8b2;
+      --accent: #8b5e34;
+      --accent-soft: #efe3d2;
+      --code: #2b241d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #f8ead1 0, transparent 30%),
+        linear-gradient(180deg, #f6f2eb 0%, #efe6da 100%);
+      line-height: 1.7;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    nav {
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.82);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+    nav h1 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+    }
+    nav p {
+      margin: 0 0 14px;
+      color: var(--sub);
+      font-size: 0.92rem;
+    }
+    nav a {
+      display: block;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      background: transparent;
+    }
+    nav a.current {
+      background: var(--accent-soft);
+      color: #5a391c;
+      font-weight: 700;
+    }
+    nav a:hover {
+      background: #f1e7d9;
+    }
+    main {
+      padding: 32px;
+    }
+    .hero {
+      background: rgba(255, 253, 249, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(82, 59, 29, 0.08);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      line-height: 1.2;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .card, .file-block {
+      background: rgba(255, 253, 249, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 22px;
+      box-shadow: 0 12px 30px rgba(82, 59, 29, 0.06);
+    }
+    .card h3, .file-block h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+    .file-block h4 {
+      margin: 18px 0 10px;
+      font-size: 1rem;
+      color: #6b4322;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .note {
+      color: var(--sub);
+      margin-bottom: 14px;
+    }
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 16px;
+      background: var(--code);
+      color: #f7f2ea;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    .explain {
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    a.inline {
+      color: var(--accent);
+    }
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      main {
+        padding: 20px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav>
+      <h1>src 解説ページ</h1>
+      <p><a class="inline" href="index.html">目次へ戻る</a></p>
+      <a class="" href="doc_src_ws01.html">ws01</a>
+<a class="" href="doc_src_ws02.html">ws02</a>
+<a class="" href="doc_src_ws03.html">ws03</a>
+<a class="current" href="doc_src_ws04.html">ws04</a>
+<a class="" href="doc_src_ws05.html">ws05</a>
+<a class="" href="doc_src_ws07.html">ws07</a>
+<a class="" href="doc_src_ws08.html">ws08</a>
+<a class="" href="doc_src_ws09.html">ws09</a>
+<a class="" href="doc_src_ws10.html">ws10</a>
+    </nav>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Directory Guide</p>
+        <h2>ws04</h2>
+        <p>サンプルHTMLから実サイトへ対象を移し、九州大学サイトの特定ブロックを抽出する演習です。</p>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <h3>読みどころ</h3>
+          <ul><li>`caution_block` や `news_block` のように、実サイトの `id` を起点に必要領域を切り出しています。</li>
+<li>HTML全体から直接探すのではなく、先に対象ブロックを絞ってから内部タグを読む構成です。</li>
+<li>ws04本体は短いコードで要点を示し、同ディレクトリ外の補助サンプルへ発展しやすい内容です。</li></ul>
+        </section>
+        <section class="card">
+          <h3>ソースコード一覧</h3>
+          <ul><li><a href="src/ws04/ws04_1.py" download>ws04_1.py</a></li>
+<li><a href="src/ws04/ws04_2.py" download>ws04_2.py</a></li></ul>
+        </section>
+      </div>
+      
+      
+    <section class="file-block">
+      <h3>src/ws04/ws04_1.py</h3>
+      <p class="note">九州大学トップページの `caution_block` から重要なお知らせ見出しを取り出します。</p>
+      <pre><code>##python3.9 #04 Kyushu University website
+import requests
+from bs4 import BeautifulSoup   
+
+## try &amp; error - main program
+try:
+  ## access &quot;url&quot; and get all html tags 
+  urlBase=&quot;https://www.kyushu-u.ac.jp/&quot;
+  url=urlBase + &quot;ja/&quot;
+  r = requests.get(url)
+  soup = BeautifulSoup(r.content, &quot;html.parser&quot;)
+  
+  ##disply tags
+  #print(soup)
+
+  ##need to expalin how to built this code --&gt; Excersize
+  ##重要なお知らせ -- id=&quot;caution_block&quot;
+  print(&quot; --- caution_block --- &quot;)
+  lstDivId=soup.find_all(&quot;div&quot;, id=&quot;caution_block&quot;)
+  lstH3=lstDivId[0].find_all(&quot;h3&quot;)
+  for i in range(len(lstH3)):
+    print(i, lstH3[i].string)
+
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>九州大学サイトの `caution_block` に限定して情報を抽出する、実サイト向け最初の例です。</li><li>HTML全体から探すのではなく、先に大きなブロックを絞る考え方を学べます。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`urlBase` と `url` を分けることで、基底URLとアクセス先URLの役割を整理しています。</li><li>`find_all(&quot;div&quot;, id=&quot;caution_block&quot;)` で目的ブロックを取得した後、さらにその中で `find_all(&quot;h3&quot;)` を呼んでいます。</li><li>このような段階検索は、対象範囲を狭めて誤検出を減らすスクレイピングの基本です。</li></ul>
+      </div>
+    </section>
+    
+
+    <section class="file-block">
+      <h3>src/ws04/ws04_2.py</h3>
+      <p class="note">ニュースブロックに絞って `h3`、`a`、`time` を取得する準備段階のコードです。</p>
+      <pre><code>##python3.9 #04 Kyushu University website
+import requests
+from bs4 import BeautifulSoup   
+
+## try &amp; error - main program
+try:
+  ## access &quot;url&quot; and get all html tags 
+  urlBase=&quot;https://www.kyushu-u.ac.jp/&quot;
+  url=urlBase + &quot;ja/&quot;
+  r = requests.get(url)
+  soup = BeautifulSoup(r.content, &quot;html.parser&quot;)
+  
+  ##NEWS -- news_block 
+  print(&quot; --- news_block --- &quot;)
+  #lstDivId=soup.find(&quot;div&quot;, id=&quot;news_block&quot;)
+  lstDivId=soup.find_all(&quot;div&quot;, id=&quot;news_block&quot;)
+  lstH3Cl=lstDivId[0].find_all(&quot;h3&quot;) 
+  lstACl=lstDivId[0].find_all(&quot;a&quot;)
+  lstTime=lstDivId[0].find_all(&quot;time&quot;)
+
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>ニュースブロックを抽出し、後続処理で使う見出し、リンク、日時タグを個別に取り出す準備コードです。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`lstDivId[0].find_all(...)` の形で、見つけたブロックの内部だけを検索しています。</li><li>`find` と `find_all` の候補がコメントで残っており、1件だけ欲しい場合と全件欲しい場合の違いが見えます。</li></ul>
+      </div>
+    </section>
+    
+    </main>
+  </div>
+</body>
+</html>

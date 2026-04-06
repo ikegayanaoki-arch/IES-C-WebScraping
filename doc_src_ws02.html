@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ws02 の解説</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf9;
+      --ink: #22201d;
+      --sub: #5d574f;
+      --line: #d6c8b2;
+      --accent: #8b5e34;
+      --accent-soft: #efe3d2;
+      --code: #2b241d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #f8ead1 0, transparent 30%),
+        linear-gradient(180deg, #f6f2eb 0%, #efe6da 100%);
+      line-height: 1.7;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    nav {
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.82);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+    nav h1 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+    }
+    nav p {
+      margin: 0 0 14px;
+      color: var(--sub);
+      font-size: 0.92rem;
+    }
+    nav a {
+      display: block;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      background: transparent;
+    }
+    nav a.current {
+      background: var(--accent-soft);
+      color: #5a391c;
+      font-weight: 700;
+    }
+    nav a:hover {
+      background: #f1e7d9;
+    }
+    main {
+      padding: 32px;
+    }
+    .hero {
+      background: rgba(255, 253, 249, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(82, 59, 29, 0.08);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      line-height: 1.2;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .card, .file-block {
+      background: rgba(255, 253, 249, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 22px;
+      box-shadow: 0 12px 30px rgba(82, 59, 29, 0.06);
+    }
+    .card h3, .file-block h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+    .file-block h4 {
+      margin: 18px 0 10px;
+      font-size: 1rem;
+      color: #6b4322;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .note {
+      color: var(--sub);
+      margin-bottom: 14px;
+    }
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 16px;
+      background: var(--code);
+      color: #f7f2ea;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    .explain {
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    a.inline {
+      color: var(--accent);
+    }
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      main {
+        padding: 20px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav>
+      <h1>src 解説ページ</h1>
+      <p><a class="inline" href="index.html">目次へ戻る</a></p>
+      <a class="" href="doc_src_ws01.html">ws01</a>
+<a class="current" href="doc_src_ws02.html">ws02</a>
+<a class="" href="doc_src_ws03.html">ws03</a>
+<a class="" href="doc_src_ws04.html">ws04</a>
+<a class="" href="doc_src_ws05.html">ws05</a>
+<a class="" href="doc_src_ws07.html">ws07</a>
+<a class="" href="doc_src_ws08.html">ws08</a>
+<a class="" href="doc_src_ws09.html">ws09</a>
+<a class="" href="doc_src_ws10.html">ws10</a>
+    </nav>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Directory Guide</p>
+        <h2>ws02</h2>
+        <p>ローカルHTMLファイルを題材に、特定タグや `id` / `class` 条件で要素を検索する練習用ディレクトリです。</p>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <h3>読みどころ</h3>
+          <ul><li>`sampleTags.html` は検索対象となるサンプル文書です。</li>
+<li>`ws02.py` は `find` と `find_all` の違いを確認する導入コードです。</li>
+<li>`common.css` はHTMLサンプルの見た目を整える補助ファイルで、スクレイピング対象の属性例としても使えます。</li></ul>
+        </section>
+        <section class="card">
+          <h3>ソースコード一覧</h3>
+          <ul><li><a href="src/ws02/common.css" download>common.css</a></li>
+<li><a href="src/ws02/sampleTags.html" download>sampleTags.html</a></li>
+<li><a href="src/ws02/ws02.py" download>ws02.py</a></li></ul>
+        </section>
+      </div>
+      
+      
+    <section class="file-block">
+      <h3>src/ws02/common.css</h3>
+      <p class="note">サンプルHTML用のスタイルシートです。`id` や要素名が定義されており、スクレイピング対象の属性例にもなります。</p>
+      <pre><code>/*@charset &quot;utf-8&quot;;*/
+
+*{
+ font-family:&#x27;Lucida Grande&#x27;, &#x27;Hiragino Kaku Gothic ProN&#x27;,&#x27;ヒラギノ書角ゴ ProN W3&#x27;, Meiryo, メイリオ, sans-serif;
+
+}
+/*
+body	{
+	background-color:#eeeeee;
+	color:#000000;
+}
+*/
+table {
+	/*border-style: solid;
+     	border-width:4px; 
+	border-color:#999999;*/
+	background-color:#999999;
+}
+th {
+	background:#999999;
+	color:#eeeeee;
+	font-size:10pt;
+	font-weight:bold;
+	/*font-family:arial;*/
+	/*border-color:#ffffff;*/
+	/*background-color:#ffffff;*/
+	/*border-style: solid;
+	border-width:1px;*/
+}
+td {
+	background:#dddddd;
+	color:#000000;
+	font-size:10pt;
+	/*font-family:arial;*/
+	padding-left:10pt;
+	padding-right:10pt;
+	/*border-bottom:4px dashed;
+	border-color:#999999;*/
+	/*border-width:0px;*/
+}
+td#ny	{
+	background:#dddddd;
+	color:#000000;
+	font-size:10pt;
+	/*font-family:arial;*/
+	font-weight:bold;
+	padding-left:10pt;
+	padding-right:10pt
+}
+td#se	{
+	background:#ffcccc;
+	color:#000000;
+	font-size:10pt;
+	/*font-family:arial;*/
+	font-weight:bold;
+	padding-left:10pt;
+	padding-right:10pt
+}
+td#ol	{
+	background:#ccffcc;
+	color:#000000;
+	font-size:10pt;
+	/*font-family:arial;*/
+	font-weight:bold;
+	padding-left:10pt;
+	padding-right:10pt
+}
+td#done	{
+	background:#ffffff;
+	color:#000000;
+	font-size:10pt;
+	/*font-family:arial;*/
+	font-weight:bold;
+	padding-left:10pt;
+	padding-right:10pt;
+}
+div#space{
+	background:#dddddd;
+	/*color:#000000;
+	font-size:9pt;
+	font-family:consolas;
+	font-weight:bold;*/
+	padding:2pt;
+	/*padding-left:15pt;
+	padding-right:15pt;
+	margin-top:2pt;
+	margin-bottom:10pt;*/
+}
+div#title{
+	background:#999999;
+	color:#eeeeee;
+	/*color:#ffffff;*/
+	font-size:20pt;
+	font-weight:bold;
+	/*font-family:arial;*/
+	padding:5pt;
+	/*margin-bottom:2pt;
+	margin-top:2pt;*/
+}
+/*subtitles*/
+/*left-side*/
+div#stitle{
+	background:#999999;
+	color:#eeeeee;
+	font-size:10pt;
+	font-weight:bold;
+	/*font-family:arial;*/
+	padding-left:10pt;
+	/*margin-top:1pt
+	margin-bottom:1pt*/
+}
+/*right-side*/
+div#stitle2{
+	background:#999999;
+	color:#eeeeee;
+	font-size:10pt;
+	font-weight:bold;
+	/*font-family:arial;*/
+	padding-right:10pt;
+	/*margin-top:1pt;
+	margin-bottom:1pt;*/
+	text-align:right;
+}
+div#content{
+	background:#dddddd;
+	color:#000000;
+	font-size:9pt;
+	/*font-family:;*/
+	/*font-family:consolas, &quot;MS UI Gothic&quot;;*/
+/*	font-weight:bold;*/
+	/*padding-left:10pt;*/
+/*	padding:2pt;
+	padding-left:15pt;
+	padding-right:15pt;
+*/	/*margin-top:2pt;
+	margin-bottom:10pt;*/
+}
+a {
+	text-decoration:none;
+	color:#000000;
+	font-weight:bold;
+}
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>サンプルHTMLの表示を整えるためのスタイルシートです。</li><li>直接スクレイピングするコードではありませんが、HTML側にどの `id` や要素名が存在するかを把握する助けになります。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`table { ... }` のような書き方は、要素セレクタに対してスタイルを当てるCSSの基本形です。</li><li>`div#title` は `div` タグのうち `id=&quot;title&quot;` を持つ要素だけに適用されます。</li><li>`background`, `color`, `font-size`, `padding` などは見た目を制御する代表的なCSSプロパティです。</li><li>`/* ... */` はCSSコメントで、教材では設定のオンオフを試しやすい形になっています。</li></ul>
+      </div>
+    </section>
+    
+
+    <section class="file-block">
+      <h3>src/ws02/sampleTags.html</h3>
+      <p class="note">BeautifulSoup の練習用に作られた小さなHTMLで、リンク、div、table など複数のタグ例を含みます。</p>
+      <pre><code>&lt;!--Sample page for web scraping: IES-C 2024 Spring, Ikegaya--&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt; Sample page&lt;/title&gt;&lt;/head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;common.css&quot; type=&quot;text/css&quot;&gt;
+
+&lt;body&gt;
+サンプルのページ:融合応用情報学C - 2024春学期 月曜2限@筑紫D107 担当 池谷
+&lt;div class=&quot;dummy&quot;&gt;division class dummy&lt;/div&gt;&lt;br&gt;
+&lt;div&gt;division&lt;/div&gt;&lt;br&gt;
+&lt;div id=&quot;title&quot;&gt;division id title&lt;/div&gt;&lt;br&gt;
+&lt;div id=&quot;stitle&quot;&gt;division id stitle #1&lt;/div&gt;&lt;br&gt;
+&lt;div id=&quot;stitle&quot;&gt;division id stitle #2&lt;/div&gt;&lt;br&gt;
+&lt;div id=&quot;stitle2&quot;&gt;division id stitle2&lt;/div&gt;&lt;br&gt;
+
+&lt;li&gt;li&lt;/li&gt;&lt;br&gt;
+
+リンク: &lt;a href=&quot;https://www.kyushu-u.ac.jp/ja/&quot;&gt;九州大学のページ&lt;/a&gt;&lt;br&gt;&lt;br&gt;
+
+&lt;table&gt;
+&lt;tr&gt;&lt;th&gt;table header 1 &lt;/th&gt;&lt;th&gt;table header 2&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;row1column1&lt;/td&gt;&lt;td&gt;row2column1&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;row1column2&lt;/td&gt;&lt;td&gt;row2column2&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>BeautifulSoup の検索練習用に用意された静的HTMLです。</li><li>リンク、複数の `div`、表、`id` と `class` を持つ要素が含まれており、検索条件の違いを試しやすい構成です。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`&lt;div id=&quot;stitle&quot;&gt;` のように `id` 属性を持つタグは、1つの固有要素を表すための例として使われています。</li><li>`&lt;div class=&quot;dummy&quot;&gt;` は同種要素のグループ化に使う `class` 属性の例です。</li><li>`&lt;a href=&quot;...&quot;&gt;` はリンク文字列と遷移先URLを持つ代表的なタグです。</li><li>`&lt;table&gt;`, `&lt;tr&gt;`, `&lt;th&gt;`, `&lt;td&gt;` は表構造を作る基本タグで、後続演習の `.contents` 走査の素材になっています。</li></ul>
+      </div>
+    </section>
+    
+
+    <section class="file-block">
+      <h3>src/ws02/ws02.py</h3>
+      <p class="note">サンプルHTMLに対して `find` / `find_all` を使い、タグ・id・class を指定した検索方法を確認します。</p>
+      <pre><code>##python3.9 #02 html tag structure 
+import requests
+from bs4 import BeautifulSoup   
+
+## try &amp; error - main program
+try:
+  ## access &quot;url&quot; and get all html tags 
+  #url=&quot;https://www.kyushu-u.ac.jp/ja/&quot;
+  #r = requests.get(url)
+  #soup = BeautifulSoup(r.content, &quot;html.parser&quot;)
+  file=&quot;./sampleTags.html&quot; 
+  soup = BeautifulSoup(open(file, encoding=&#x27;utf-8&#x27;), &quot;html.parser&quot;)
+
+  ##disply tags
+  #print(soup)
+
+  ##find by tag: &lt;body&gt;
+  tBody=soup.find(&quot;body&quot;) #tag by &lt;body&gt;
+  lstBody=soup.find_all(&quot;body&quot;) #tag list by &lt;body&gt;
+
+  ##find by tag: &lt;a&gt;
+  tA=soup.find(&quot;a&quot;)
+  lstA=soup.find_all(&quot;a&quot;)
+  
+  ##find by tag and class or id :&lt;div class=&gt;/&lt;div id=&gt;
+  lstDiv=soup.find_all(&quot;div&quot;)
+  #lstDiv
+  lstDivId=soup.find_all(&quot;div&quot;, id=&quot;stitle&quot;)
+  #lstDivId
+  lstDivCl=soup.find_all(&quot;div&quot;, class_=&quot;dummy&quot;)
+  #lstDivCl
+
+  print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>ローカルのHTMLファイルを読み込み、指定したタグ名や属性で要素を検索する基本操作を確認するプログラムです。</li><li>`find` は最初の1件、`find_all` は条件に合う全件を返すという違いを実例で学べます。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`open(file, encoding=&#x27;utf-8&#x27;)` でUTF-8のHTMLファイルを開いています。</li><li>`soup.find(&quot;body&quot;)` のように文字列でタグ名を指定すると、そのタグを検索できます。</li><li>`find_all(&quot;div&quot;, id=&quot;stitle&quot;)` や `class_=&quot;dummy&quot;` は属性条件付き検索です。`class` はPythonの予約語なので `class_` と書きます。</li><li>変数名の先頭 `t` は単一タグ、`lst` はリストを意味しており、教材として役割が分かる命名になっています。</li></ul>
+      </div>
+    </section>
+    
+    </main>
+  </div>
+</body>
+</html>

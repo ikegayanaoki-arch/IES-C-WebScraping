@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ws08 の解説</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf9;
+      --ink: #22201d;
+      --sub: #5d574f;
+      --line: #d6c8b2;
+      --accent: #8b5e34;
+      --accent-soft: #efe3d2;
+      --code: #2b241d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, #f8ead1 0, transparent 30%),
+        linear-gradient(180deg, #f6f2eb 0%, #efe6da 100%);
+      line-height: 1.7;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
+    }
+    nav {
+      padding: 24px 18px;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 249, 0.82);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: auto;
+    }
+    nav h1 {
+      margin: 0 0 14px;
+      font-size: 1.1rem;
+    }
+    nav p {
+      margin: 0 0 14px;
+      color: var(--sub);
+      font-size: 0.92rem;
+    }
+    nav a {
+      display: block;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      color: var(--ink);
+      text-decoration: none;
+      background: transparent;
+    }
+    nav a.current {
+      background: var(--accent-soft);
+      color: #5a391c;
+      font-weight: 700;
+    }
+    nav a:hover {
+      background: #f1e7d9;
+    }
+    main {
+      padding: 32px;
+    }
+    .hero {
+      background: rgba(255, 253, 249, 0.9);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 16px 40px rgba(82, 59, 29, 0.08);
+    }
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+      line-height: 1.2;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .card, .file-block {
+      background: rgba(255, 253, 249, 0.92);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin-top: 22px;
+      box-shadow: 0 12px 30px rgba(82, 59, 29, 0.06);
+    }
+    .card h3, .file-block h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+    }
+    .file-block h4 {
+      margin: 18px 0 10px;
+      font-size: 1rem;
+      color: #6b4322;
+    }
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .note {
+      color: var(--sub);
+      margin-bottom: 14px;
+    }
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow: auto;
+      border-radius: 16px;
+      background: var(--code);
+      color: #f7f2ea;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+    .explain {
+      margin-top: 18px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+    }
+    a.inline {
+      color: var(--accent);
+    }
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      nav {
+        position: static;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+      main {
+        padding: 20px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav>
+      <h1>src 解説ページ</h1>
+      <p><a class="inline" href="index.html">目次へ戻る</a></p>
+      <a class="" href="doc_src_ws01.html">ws01</a>
+<a class="" href="doc_src_ws02.html">ws02</a>
+<a class="" href="doc_src_ws03.html">ws03</a>
+<a class="" href="doc_src_ws04.html">ws04</a>
+<a class="" href="doc_src_ws05.html">ws05</a>
+<a class="" href="doc_src_ws07.html">ws07</a>
+<a class="current" href="doc_src_ws08.html">ws08</a>
+<a class="" href="doc_src_ws09.html">ws09</a>
+<a class="" href="doc_src_ws10.html">ws10</a>
+    </nav>
+    <main>
+      <section class="hero">
+        <p class="eyebrow">Directory Guide</p>
+        <h2>ws08</h2>
+        <p>スクレイピング結果を画像保存だけで終わらせず、教員の属性情報を `pickle` で保存する段階です。</p>
+      </section>
+
+      <div class="grid">
+        <section class="card">
+          <h3>読みどころ</h3>
+          <ul><li>`dt` と `dd` の対応を使って、職位・所属・研究テーマ・キーワードを抽出します。</li>
+<li>名前の重複を避けるために `names` リストで既出判定を行っています。</li>
+<li>`ws08.sample.py` は情報を多めに保存する完成版、`ws08.py` は職位中心に絞った短縮版です。</li></ul>
+        </section>
+        <section class="card">
+          <h3>ソースコード一覧</h3>
+          <ul><li><a href="src/ws08/ws08.py" download>ws08.py</a></li>
+<li><a href="src/ws08/ws08.sample.py" download>ws08.sample.py</a></li></ul>
+        </section>
+      </div>
+      
+      
+    <section class="file-block">
+      <h3>src/ws08/ws08.py</h3>
+      <p class="note">教員名と職位を中心に収集し、pickleで `opList.dump` に保存する短縮版です。</p>
+      <pre><code>##python3.9 #08 figures &amp; data save by pickle
+import requests
+from bs4 import BeautifulSoup   
+import time   ##for time control
+import pickle ##for data save by pickle (binary)
+
+## try &amp; error - main program
+try:
+  ## access &quot;url&quot; and get all html tags 
+  url=&quot;https://q-pit.kyushu-u.ac.jp/cluster-social/&quot;
+  r = requests.get(url)
+  soup = BeautifulSoup(r.content, &quot;html.parser&quot;)
+  
+  ##to store data - list and dump
+  opList=[]
+  names=[] #name -- for chekcing overlap
+
+  ##save figures with name
+  lstDivCl=soup.find_all(&quot;div&quot;, class_=&quot;teacher_list_item&quot;) # category
+  lstACl=soup.find_all(&quot;a&quot;, class_=&quot;fs_xxl&quot;) # name
+  lstDivClProf=soup.find_all(&quot;div&quot;, class_=&quot;teacher_list_item_profile&quot;) # profile
+  for i in range(len(lstDivCl)):
+    ##profile
+    lstDt=lstDivClProf[i].find_all(&quot;dt&quot;) 
+    lstDd=lstDivClProf[i].find_all(&quot;dd&quot;) 
+    ##category and value
+    cat=[j.string for j in lstDt] ##categories
+    val=[j.string.replace(&quot;\t&quot;, &quot;&quot;) if (len(j) !=0) else j.string for j in lstDd] 
+
+    ##prof name
+    #name=lstACl[i].string ##cause error when pickled
+    name=str(lstACl[i].string )
+    if name not in names: 
+      names.append(name) #name list
+      ##for debugging
+      #print(name, names)
+      print(name)
+
+      ##select output data 
+      for k in range(len(cat)):
+        #print(k, val[k], cat[k])
+        if(cat[k] == &quot;職位&quot;) : jtl=val[k]
+
+      ##for pickle output - in the order output
+      tmp=[]
+      tmp.append(name)   
+      tmp.append(jtl)   
+      ## append in output list
+      opList.append(tmp)
+      ##for debugging
+      #print(opList)
+
+  ##pickled 
+  ##for debugging
+  #print(opList)
+  f=open(&quot;opList.dump&quot;, &quot;wb&quot;)
+  pickle.dump(opList, f)
+
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>教員名と職位を抽出し、後で再利用できるよう `pickle` 形式で保存するプログラムです。</li><li>HTMLの都度解析から、構造化データ保存へ進む段階に当たります。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>`pickle.dump(opList, f)` はPythonオブジェクトをバイナリ形式で保存する文法です。</li><li>`cat=[j.string for j in lstDt]` はリスト内包表記で、タグ群から文字列だけを抜き出しています。</li><li>`if name not in names:` によって重複登録を防いでいます。</li></ul>
+      </div>
+    </section>
+    
+
+    <section class="file-block">
+      <h3>src/ws08/ws08.sample.py</h3>
+      <p class="note">職位・所属・研究テーマ・キーワードまで含めて保存する完成版に近いサンプルです。</p>
+      <pre><code>##python3.9 #08 figures &amp; data save by pickle
+import requests
+from bs4 import BeautifulSoup   
+import time   ##for time control
+import pickle ##for data save by pickle (binary)
+
+## try &amp; error - main program
+try:
+  ## access &quot;url&quot; and get all html tags 
+  url=&quot;https://q-pit.kyushu-u.ac.jp/cluster-social/&quot;
+  r = requests.get(url)
+  soup = BeautifulSoup(r.content, &quot;html.parser&quot;)
+  
+  ##disply tags
+  #print(soup)
+
+  ##to store data - list and dump
+  opList=[]
+  names=[] #name -- for chekcing overlap
+
+  ##save figures with name
+  lstDivCl=soup.find_all(&quot;div&quot;, class_=&quot;teacher_list_item&quot;) # category
+  lstACl=soup.find_all(&quot;a&quot;, class_=&quot;fs_xxl&quot;) # name
+  lstDivClProf=soup.find_all(&quot;div&quot;, class_=&quot;teacher_list_item_profile&quot;) # profile
+  for i in range(len(lstDivCl)):
+    ##profile
+    lstDt=lstDivClProf[i].find_all(&quot;dt&quot;) 
+    lstDd=lstDivClProf[i].find_all(&quot;dd&quot;) 
+    ##category and value
+    cat=[j.string for j in lstDt] ##categories
+    val=[j.string.replace(&quot;\t&quot;, &quot;&quot;) if (len(j) !=0) else j.string for j in lstDd] 
+
+    ##prof name
+    #name=lstACl[i].string ##cause error when pickled
+    name=str(lstACl[i].string )
+    if name not in names: 
+      names.append(name) #name list
+      ##for debugging
+      #print(name, names)
+      print(name)
+
+      ##select output data 
+      for k in range(len(cat)):
+        #print(k, val[k], cat[k])
+        if(cat[k] == &quot;職位&quot;) : jtl=val[k]
+        if(cat[k] == &quot;所属&quot;) : afl=val[k]
+        if(cat[k] == &quot;研究テーマ&quot;) : theme=val[k]
+        if(cat[k] == &quot;キーワード&quot;) : key=val[k]
+
+      ##for pickle output - in the order output
+      tmp=[]
+      tmp.append(name)   
+      tmp.append(jtl)   
+      tmp.append(afl)   
+      tmp.append(theme)   
+      tmp.append(key)   
+      ## append in output list
+      opList.append(tmp)
+      ##for debugging
+      #print(opList)
+
+  ##pickled 
+  ##for debugging
+  #print(opList)
+  f=open(&quot;opList.dump&quot;, &quot;wb&quot;)
+  pickle.dump(opList, f)
+
+  #print(&quot;end of try&quot;)
+##console output when error
+except:
+  print(&quot;error&quot;)
+
+
+</code></pre>
+      <div class="explain">
+        <h4>プログラムの概要</h4>
+        <ul><li>職位に加えて所属、研究テーマ、キーワードまで含めて保存する完成版サンプルです。</li><li>後続の可視化で必要になる情報がここで一通り揃います。</li></ul>
+        <h4>構文・文法のポイント</h4>
+        <ul><li>カテゴリ名 `cat[k]` に応じて `jtl`, `afl`, `theme`, `key` へ振り分ける分岐が中心です。</li><li>`tmp.append(...)` を順番に並べることで、後段で固定位置のデータとして読み出せるようにしています。</li></ul>
+      </div>
+    </section>
+    
+    </main>
+  </div>
+</body>
+</html>

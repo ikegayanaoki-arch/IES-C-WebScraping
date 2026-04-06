@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>融合応用情報学C - 融合基礎工学科</title>
+  <style>
+    :root {
+      --bg: #f5efe6;
+      --paper: rgba(255, 251, 245, 0.92);
+      --ink: #211d19;
+      --sub: #5b5349;
+      --line: #d8c7af;
+      --accent: #9f5126;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 10%, #f6d9b8 0, transparent 20%),
+        radial-gradient(circle at 90% 20%, #ead8bf 0, transparent 24%),
+        linear-gradient(180deg, #f8f2ea 0%, #efe4d4 100%);
+    }
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 56px;
+    }
+    .hero {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 30px;
+      box-shadow: 0 18px 44px rgba(91, 63, 35, 0.08);
+      margin-bottom: 24px;
+    }
+    .hero p {
+      max-width: 54rem;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 4vw, 3.6rem);
+      line-height: 1.1;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      min-height: 200px;
+      box-shadow: 0 10px 30px rgba(91, 63, 35, 0.06);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px rgba(91, 63, 35, 0.12);
+      border-color: #c89870;
+    }
+    .path {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+    }
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+    }
+    p {
+      margin: 0;
+      line-height: 1.7;
+      color: var(--sub);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <h1>融合応用情報学C - 融合基礎工学科</h1>
+      <p>この目次は、`src` 配下の各ディレクトリごとに作成した日本語の解説ページへ移動するための入口です。前半はWebスクレイピングの基本、後半はデータ保存・可視化・クラスタ別処理という流れが追えるように構成しています。</p>
+    </section>
+    <section class="grid">
+      
+            <a class="card" href="doc_src_ws01.html">
+              <p class="path">src/ws01</p>
+              <h2>ws01</h2>
+              <p>最初の演習で、`requests` と `BeautifulSoup` を使ってWebページ全体のHTMLを取得し、そのまま表示する最小構成です。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws02.html">
+              <p class="path">src/ws02</p>
+              <h2>ws02</h2>
+              <p>ローカルHTMLファイルを題材に、特定タグや `id` / `class` 条件で要素を検索する練習用ディレクトリです。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws03.html">
+              <p class="path">src/ws03</p>
+              <h2>ws03</h2>
+              <p>ws02 の続きとして、リンク文字列・属性値・表データなど、タグの中身を実際に取り出す処理へ進んでいます。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws04.html">
+              <p class="path">src/ws04</p>
+              <h2>ws04</h2>
+              <p>サンプルHTMLから実サイトへ対象を移し、九州大学サイトの特定ブロックを抽出する演習です。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws05.html">
+              <p class="path">src/ws05</p>
+              <h2>ws05</h2>
+              <p>Yahoo!ニュースのトップページを対象に、カテゴリリンク、トピックス、ランキングを抽出する演習です。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws07.html">
+              <p class="path">src/ws07</p>
+              <h2>ws07</h2>
+              <p>Q-PIT のクラスタページから教員名と顔画像URLを取得し、ローカルに画像保存する演習です。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws08.html">
+              <p class="path">src/ws08</p>
+              <h2>ws08</h2>
+              <p>スクレイピング結果を画像保存だけで終わらせず、教員の属性情報を `pickle` で保存する段階です。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws09.html">
+              <p class="path">src/ws09</p>
+              <h2>ws09</h2>
+              <p>pickle で保存した教員データを再読み込みし、棒グラフとワードクラウドで可視化する演習です。</p>
+            </a>
+            
+
+            <a class="card" href="doc_src_ws10.html">
+              <p class="path">src/ws10</p>
+              <h2>ws10</h2>
+              <p>ここでは処理対象を1クラスタに固定せず、引数で `cluster-material` などを切り替えてデータ収集と可視化を自動実行できるようにしています。</p>
+            </a>
+            
+    </section>
+  </main>
+</body>
+</html>
